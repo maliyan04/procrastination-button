@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Procrastination Button</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    /* Splash Screen */
+    #splash {
+      position: fixed;
+      inset: 0;
+      background: #1a1a2e;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.6s ease;
+    }
+    #splash h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      animation: pulse 1.2s infinite;
+    }
+    #splash p { opacity: 0.7; }
+    #splash.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    /* Container */
+    .container {
+      background: white;
+      padding: 2.5rem 2rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      text-align: center;
+      max-width: 450px;
+      width: 100%;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 1.6rem;
+    }
+
+    #task {
+      font-size: 1.15rem;
+      margin: 24px 0;
+      min-height: 70px;
+      line-height: 1.5;
+      color: #444;
+    }
+
+    button {
+      padding: 14px 28px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background: #764ba2;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.2s;
+      font-weight: 600;
+    }
+    button:hover {
+      background: #5a3780;
+      transform: scale(1.05);
+    }
+    button:active {
+      transform: scale(0.97);
+    }
+
+    #counter {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    .dev-link {
+      display: inline-block;
+      margin-top: 22px;
+      font-size: 0.9rem;
+      color: #764ba2;
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity 0.2s;
+      cursor: pointer;
+    }
+    .dev-link:hover { opacity: 0.7; }
+
+    /* Developer Page Styles */
+    .avatar {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 1px;
+    }
+
+    .dev-container h1 {
+      margin: 0 0 6px;
+      font-size: 1.5rem;
+    }
+
+    .tagline {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #888;
+      letter-spacing: 0.5px;
+    }
+
+    .divider {
+      height: 1px;
+      background: #eee;
+      margin: 22px 0;
+    }
+
+    .bio {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #444;
+      margin: 14px 0;
+    }
+
+    .bio.highlight {
+      font-weight: 600;
+      color: #764ba2;
+    }
+
+    .feedback {
+      font-size: 1rem;
+      color: #444;
+      margin: 10px 0;
+    }
+
+    /* Page switching */
+    .page { display: none; }
+    .page.active { display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- Splash Screen -->
+  <div id="splash">
+    <h1>An Aliyan Production</h1>
+    <p>Loading...</p>
+  </div>
+
+  <!-- Main Page -->
+  <div id="mainPage" class="container page active">
+    <h1>Don't feel like working? 😌</h1>
+    <p id="task">Click the button and I'll give you something else to do.</p>
+    <button id="procrastinateBtn">I Don't Want To Work</button>
+    <p id="counter">Today you've avoided work 0 times</p>
+
+    <a class="dev-link" onclick="showPage('devPage')">👨‍💻 Developer</a>
+  </div>
+
+  <!-- Developer Page -->
+  <div id="devPage" class="container dev-container page">
+    <div class="avatar">MA</div>
+
+    <h1>Muhammad Aliyan</h1>
+    <p class="tagline">BSCS Student · Virtual University</p>
+
+    <div class="divider"></div>
+
+    <p class="bio">
+      I design and develop websites, Android apps &amp; games with a mix of my own
+      logic and AI assistance.
+    </p>
+
+    <p class="bio highlight">Always learning, always building.</p>
+
+    <div class="divider"></div>
+
+    <p class="feedback">
+      💬 Your feedback helps me improve!
+    </p>
+
+    <a class="dev-link" onclick="showPage('mainPage')">← Back to Home</a>
+  </div>
+
+  <script>
+    const tasks = [
+      "Arrange your desktop icons by color 🎨",
+      "Count how many browser tabs you have open 🔢",
+      "Learn to say 'hello' in 5 languages 🌍",
+      "Scroll through old photos and miss 2019 📸",
+      "Open the fridge, take nothing, close it 🧊",
+      "Find the 47th photo in your phone gallery 📱",
+      "Drink a glass of water, then wonder why 💧",
+      "Untangle your headphone wire 🎧",
+      "Google your own name 🔍",
+      "Open Notepad and type one random line 📝",
+      "Listen to the sound of your keyboard keys ⌨️",
+      "Run a WiFi speed test, then run it again 📶",
+      "Plan to organize your bag (don't actually do it) 🎒",
+      "Rewatch an old meme 😂",
+      "Write a message to your future self ✉️"
+    ];
+
+    // Splash screen - hide after 2 seconds
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('splash').classList.add('hide');
+      }, 2000);
+    });
+
+    // Page switching
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+    }
+
+    // Button logic
+    const taskEl = document.getElementById('task');
+    const btn = document.getElementById('procrastinateBtn');
+    const counterEl = document.getElementById('counter');
+    let count = 0;
+
+    btn.addEventListener('click', () => {
+      const randomTask = tasks[Math.floor(Math.random() * tasks.length)];
+      taskEl.textContent = randomTask;
+      count++;
+      counterEl.textContent = `Today you've avoided work ${count} time${count > 1 ? 's' : ''} 😅`;
+    });
+  </script>
+</body>
+</html>
